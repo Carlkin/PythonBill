@@ -1,0 +1,9 @@
+首先文件进入根目录
+
+1）执行  下载安装程序库
+pip install pyinstaller
+2）执行打包指令
+pyinstaller -F -w KeymouseGo.py
+
+
+不懂看文档地址：https://www.jianshu.com/p/cda59b805b9d

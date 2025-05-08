@@ -1,0 +1,6 @@
+
+
+c:\Users\古古牙\AppData\Local\Programs\Python\Python311\python.exe -m pip install pyautogui -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+
+少了哪个就替换“requests”，执行命令即可↑
