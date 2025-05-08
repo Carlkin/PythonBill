@@ -976,24 +976,24 @@ class RunScriptClass(threading.Thread):
                 else:
                     print('unknow extra event:', message)
 
-        try:
-            print('获取机器人状态')
-            r = requests.post(
-                'http://easyapi.16j.cn/api/robotoperate/getrobotstate?id=' +
-                conf['robotid'],
-                verify=False)
-            print(conf['robotid'])
-            print(r)
+        # try:
+        #     print('获取机器人状态')
+        #     r = requests.post(
+        #         'http://easyapi.16j.cn/api/robotoperate/getrobotstate?id=' +
+        #         conf['robotid'],
+        #         verify=False)
+        #     print(conf['robotid'])
+        #     print(r)
 
-            # 解析返回的 JSON 数据
-            response_json = r.json()
-            # 检查状态是否为 "开启"
-            if response_json['data'] != '开启':
-                print('关闭')
-                return
-        except Exception as e:
-            print(e)
-            return
+        #     # 解析返回的 JSON 数据
+        #     response_json = r.json()
+        #     # 检查状态是否为 "开启"
+        #     if response_json['data'] != '开启':
+        #         print('关闭')
+        #         return
+        # except Exception as e:
+        #     print(e)
+        #     return
 
         # try:
         #     print('获取发单任务')
@@ -1019,13 +1019,19 @@ class RunScriptClass(threading.Thread):
         #     print(e)
         #     return
 
-        # RunScriptClass.Send_User_Msg("古古牙","【自动回复】123");
+        # RunScriptClass.Send_User_Msg("古古牙","【自动回复】123","https://www.randengseo.com/static/css/dist/css/images/default.jpg");
         # RunScriptClass.copy_img("https://www.randengseo.com/static/css/dist/css/images/default.jpg")
 
         # 打印开始时间
         print(f"开始时间: {datetime.datetime.now()}")
+        images = [
+            "http://sucaipai.com/log/20250508/20250508232918.jpeg",
+            "http://sucaipai.com/log/20250508/20250508232937.jpeg"
+        ]
+        RunScriptClass.Send_User_Msg("古古牙", "123", images)
 
-        RunScriptClass.Send_User_Msg()
+        time.sleep(5)
+        return
 
         # 打印结束时间
         print(f"结束时间: {datetime.datetime.now()}")
@@ -1058,15 +1064,19 @@ class RunScriptClass(threading.Thread):
     # 发消息到好友
     def Send_User_Msg(userName, msg, images):
         try:
+            if not userName:  # 如果 userName 为空，直接跳出
+                print("群名称为空，跳出")
+                return
+            print("找到群\n========================")
+            # 复制
+            pyperclip.copy(userName)
             # 模拟按下 Ctrl + f
             pyautogui.hotkey('ctrl', 'f')
             time.sleep(2)  # 等待
             # 模拟按下 Ctrl + A (避免有垃圾数据)
             pyautogui.hotkey('ctrl', 'a')
             # 等待几秒钟，确保焦点在文本框中
-            time.sleep(2)
-            # 复制
-            pyperclip.copy(userName)
+            time.sleep(1)
             # 模拟按下 Ctrl + V
             pyautogui.hotkey('ctrl', 'v')
             time.sleep(1)
@@ -1076,25 +1086,38 @@ class RunScriptClass(threading.Thread):
             # 模拟按下 Ctrl + f
             pyautogui.hotkey('ctrl', 'f')
             time.sleep(1)
-            print("进入群\n========================")
-            # 模拟按下 Ctrl + A (避免有垃圾数据)
-            pyautogui.hotkey('ctrl', 'a')
-            # 等待几秒钟，确保焦点在文本框中
-            time.sleep(2)
-            # 复制
-            pyperclip.copy(msg)
-            # 模拟按下 Ctrl + V
-            pyautogui.hotkey('ctrl', 'v')
             # 模拟按下回车键
             pyautogui.press('enter')
-            print("成功\n========================")
-
-            # 遍历并复制图片
-            for img in images:
-                time.sleep(3)
-                RunScriptClass.copy_img(img)
+            time.sleep(3)
+            if not images:  # 如果 images 为空，跳过发送图片
+                print("没有图片需要发送\n========================")
+            else:
+                print("开始发送图片\n========================")
+                # 遍历并复制图片
+                for img in images:
+                    print(f"发送图片{img}\n========================")
+                    RunScriptClass.copy_img(img)
+                    # 模拟按下 Ctrl + A (避免有垃圾数据)
+                    pyautogui.hotkey('ctrl', 'a')
+                    # 等待几秒钟，确保焦点在文本框中
+                    time.sleep(2)
+                    # 模拟按下 Ctrl + V
+                    pyautogui.hotkey('ctrl', 'v')
+                    time.sleep(1)
+                    # 模拟按下回车键
+                    pyautogui.press('enter')
+                    print(f"发送图片结束\n========================")
+            print("发送文字\n========================")
+            if msg:  # 如果 msg 有内容，才发送文字
+                # 复制
+                pyperclip.copy(msg)
+                # 模拟按下 Ctrl + A (避免有垃圾数据)
+                pyautogui.hotkey('ctrl', 'a')
+                # 等待几秒钟，确保焦点在文本框中
+                time.sleep(1)
                 # 模拟按下 Ctrl + V
                 pyautogui.hotkey('ctrl', 'v')
+                time.sleep(5)
                 # 模拟按下回车键
                 pyautogui.press('enter')
         except Exception as e:

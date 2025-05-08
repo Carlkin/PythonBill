@@ -15,11 +15,13 @@ import ctypes
 # DPI感知
 try:
     # win10 version 1607及以上
-    ctypes.windll.shcore.SetProcessDpiAwarenessContext(ctypes.windll.shcore.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2)
+    ctypes.windll.shcore.SetProcessDpiAwarenessContext(
+        ctypes.windll.shcore.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2)
 except:
     try:
         # win 8.1 及以上
-        ctypes.windll.shcore.SetProcessDpiAwareness(ctypes.windll.shcore.PROCESS_PER_MONITOR_DPI_AWARE)
+        ctypes.windll.shcore.SetProcessDpiAwareness(
+            ctypes.windll.shcore.PROCESS_PER_MONITOR_DPI_AWARE)
     except:
         # win vista 及以上
         ctypes.windll.user32.SetProcessDPIAware()
@@ -28,6 +30,7 @@ modules = {'Frame1': [1, 'Main frame of Application', u'Frame1.py']}
 
 
 class BoaApp(wx.App):
+
     def OnInit(self):
         self.main = Frame1.create(None)
         self.main.Show()
@@ -60,6 +63,7 @@ def single_run(script_path, run_times=1):
 class HookThread(threading.Thread):
 
     def run(self):
+
         def on_keyboard_event(event):
             key_name = event.Key.lower()
             stop_name = 'f9'
